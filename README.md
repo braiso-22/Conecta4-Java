@@ -8,6 +8,7 @@ Primer Reto Mensual de Mouredev
 ## Imagenes en Juego
 <img src="/fotos/tablero.png" alt="Tablero">
 <img src="/fotos/EnPartida.png" alt="En partida">
+<img src="/fotos/Empate.png" alt="Empate">
 <img src="/fotos/Victoria.png" alt="Victoria">
 
 
