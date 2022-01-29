@@ -65,7 +65,19 @@ public class Game {
     }
 
     public boolean finalizado() {
-        return lineaHorizontal() || lineaVertical() || lineaDiagonalDerecha() || lineaDiagonalIzquierda();
+
+        return (lineaHorizontal() || lineaVertical() || lineaDiagonalDerecha() || lineaDiagonalIzquierda());
+    }
+
+    public boolean empate() {
+        for (int[] i : casillas) {
+            for (int j : i) {
+                if (j == VACIO) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public int getTurno() {
