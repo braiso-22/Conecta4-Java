@@ -44,6 +44,10 @@ public class View extends javax.swing.JFrame {
 
     }
 
+    /*
+        Funcion para añadir botones al tablero que tienen un actionPerformed
+        personalizado y con nombre la posicion en el array.
+     */
     private void llenarBotones(int filas, int columnas) {
         for (int i = filas - 1; i >= 0; i--) {
             for (int j = 0; j < columnas; j++) {
@@ -64,9 +68,13 @@ public class View extends javax.swing.JFrame {
         }
     }
 
+    /*
+        Funcion que recoge el evento de pulsar el boton y cambia la UI 
+        dependiendo de los valores del juego
+     */
     private void FActionPerformed(ActionEvent evt) {
         String[] casillas = ((JButton) evt.getSource()).getName().split(" ");
-        System.out.println(casillas[0] + " " + casillas[1]);
+        //System.out.println(casillas[0] + " " + casillas[1]);
         int fila = partida.addToColumna(Integer.parseInt(casillas[1]));
         if (fila != -1) {
             if (!partida.hayGanador() && !partida.empate()) {
@@ -85,17 +93,31 @@ public class View extends javax.swing.JFrame {
                     lPuntosRojo.setText("  Rojo: " + puntosRojo);
                 }
                 JOptionPane.showMessageDialog(null, "Ganaste!");
-                partida.iniciarCasillas();
-                quitarFichas(6, 7);
-                escribirTurno();
-
+                reiniciarPartida();
             } else {
                 lQuienToca.setText("Empate");
+                pintarCasilla(fila, Integer.parseInt(casillas[1]));
+                JOptionPane.showMessageDialog(null, "Empate!");
+                reiniciarPartida();
+
             }
 
         }
     }
 
+    /*
+        Funcion que borra los datos de las fichas en la partida, borra las 
+        fichas en la UI y escribe de nuevo a quien le toca
+     */
+    private void reiniciarPartida() {
+        partida.iniciarCasillas();
+        quitarFichas(6, 7);
+        escribirTurno();
+    }
+
+    /*
+        Funcion que cambia el texto de quien le toca
+     */
     private void escribirTurno() {
         if (partida.getTurno() == partida.ROJO) {
             lQuienToca.setText("Le toca al jugador: Rojo");
@@ -104,11 +126,25 @@ public class View extends javax.swing.JFrame {
         }
     }
 
+    /*
+        Funcion que pinta la ultima casilla de la columna que has seleccionado
+     */
     private void pintarCasilla(int fila, int columna) {
         if (partida.getTurno() == partida.ROJO) {
             botones[fila][columna].setBackground(Color.YELLOW);
         } else {
             botones[fila][columna].setBackground(Color.red);
+        }
+    }
+
+    /*
+        Funcion que borra todas las fichas del tablero
+     */
+    public void quitarFichas(int filas, int columnas) {
+        for (int i = filas - 1; i >= 0; i--) {
+            for (int j = 0; j < columnas; j++) {
+                botones[i][j].setBackground(Color.white);
+            }
         }
     }
 
@@ -200,14 +236,6 @@ public class View extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    public void quitarFichas(int filas, int columnas) {
-        for (int i = filas - 1; i >= 0; i--) {
-            for (int j = 0; j < columnas; j++) {
-                botones[i][j].setBackground(Color.white);
-            }
-        }
-    }
 
     /**
      * @param args the command line arguments
