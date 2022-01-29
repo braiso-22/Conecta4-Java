@@ -7,8 +7,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.HashSet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import model.Game;
 
@@ -25,11 +27,15 @@ public class View extends javax.swing.JFrame {
      */
     public View() {
         partida = new Game();
+        puntosRojo = 0;
+        puntosAmarillo = 0;
         initComponents();
         int filas = 6, columnas = 7;
         lQuienToca = new JLabel("Le toca al jugador: Rojo", SwingConstants.CENTER);
         lQuienToca.setFont(new java.awt.Font("Roboto", 0, 36));
         lQuienToca.setForeground(Color.white);
+        lPuntosRojo.setText(lPuntosRojo.getText() + puntosRojo);
+        lPuntosAmarillo.setText(lPuntosAmarillo.getText() + puntosAmarillo);
         pTurno.add(lQuienToca);
         pTablero.setLayout(new java.awt.GridLayout(filas, columnas));
         botones = new JButton[filas][columnas];
@@ -38,30 +44,12 @@ public class View extends javax.swing.JFrame {
 
     }
 
-    public void applyNimbus() {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
-
     private void llenarBotones(int filas, int columnas) {
         for (int i = filas - 1; i >= 0; i--) {
             for (int j = 0; j < columnas; j++) {
                 botones[i][j] = new JButton();
                 botones[i][j].setName(i + " " + j);
+
                 pTablero.add(botones[i][j]);
 
                 final int iFinal = i, jFinal = j;
@@ -80,15 +68,47 @@ public class View extends javax.swing.JFrame {
         String[] casillas = ((JButton) evt.getSource()).getName().split(" ");
         System.out.println(casillas[0] + " " + casillas[1]);
         int fila = partida.addToColumna(Integer.parseInt(casillas[1]));
-        if (fila!=-1) {
-            if (partida.getTurno() == partida.ROJO) {
-                lQuienToca.setText("Le toca al jugador: Rojo");
-                botones[fila][Integer.parseInt(casillas[1])].setBackground(Color.YELLOW);
+        if (fila != -1) {
+            if (!partida.hayGanador() && !partida.empate()) {
+                escribirTurno();
+                pintarCasilla(fila, Integer.parseInt(casillas[1]));
+            } else if (partida.hayGanador()) {
+                if (partida.getTurno() == partida.ROJO) {
+                    pintarCasilla(fila, Integer.parseInt(casillas[1]));
+                    puntosAmarillo++;
+                    lQuienToca.setText("Ha ganado el Amarillo");
+                    lPuntosAmarillo.setText("  Amarillo: " + puntosAmarillo);
+                } else {
+                    pintarCasilla(fila, Integer.parseInt(casillas[1]));
+                    puntosRojo++;
+                    lQuienToca.setText("Ha ganado el Rojo");
+                    lPuntosRojo.setText("  Rojo: " + puntosRojo);
+                }
+                JOptionPane.showMessageDialog(null, "Ganaste!");
+                partida.iniciarCasillas();
+                quitarFichas(6, 7);
+                escribirTurno();
+
             } else {
-                botones[fila][Integer.parseInt(casillas[1])].setBackground(Color.red);
-                lQuienToca.setText("Le toca al jugador: Amarillo");
+                lQuienToca.setText("Empate");
             }
 
+        }
+    }
+
+    private void escribirTurno() {
+        if (partida.getTurno() == partida.ROJO) {
+            lQuienToca.setText("Le toca al jugador: Rojo");
+        } else {
+            lQuienToca.setText("Le toca al jugador: Amarillo");
+        }
+    }
+
+    private void pintarCasilla(int fila, int columna) {
+        if (partida.getTurno() == partida.ROJO) {
+            botones[fila][columna].setBackground(Color.YELLOW);
+        } else {
+            botones[fila][columna].setBackground(Color.red);
         }
     }
 
@@ -117,7 +137,7 @@ public class View extends javax.swing.JFrame {
         pLateralIzquierda.setBackground(new java.awt.Color(255, 255, 255));
 
         lPuntosRojo.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        lPuntosRojo.setText("  Rojo: 0");
+        lPuntosRojo.setText("  Rojo: ");
 
         javax.swing.GroupLayout pLateralIzquierdaLayout = new javax.swing.GroupLayout(pLateralIzquierda);
         pLateralIzquierda.setLayout(pLateralIzquierdaLayout);
@@ -141,7 +161,7 @@ public class View extends javax.swing.JFrame {
         pLateralDerecha.setBackground(new java.awt.Color(255, 255, 255));
 
         lPuntosAmarillo.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        lPuntosAmarillo.setText("  Amarillo: 0");
+        lPuntosAmarillo.setText("  Amarillo: ");
 
         javax.swing.GroupLayout pLateralDerechaLayout = new javax.swing.GroupLayout(pLateralDerecha);
         pLateralDerecha.setLayout(pLateralDerechaLayout);
@@ -180,6 +200,14 @@ public class View extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void quitarFichas(int filas, int columnas) {
+        for (int i = filas - 1; i >= 0; i--) {
+            for (int j = 0; j < columnas; j++) {
+                botones[i][j].setBackground(Color.white);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -227,4 +255,5 @@ public class View extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private JButton[][] botones;
     JLabel lQuienToca;
+    int puntosRojo, puntosAmarillo;
 }
