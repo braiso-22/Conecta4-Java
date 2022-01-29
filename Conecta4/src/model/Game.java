@@ -66,35 +66,60 @@ public class Game {
     }
 
     public boolean finalizado() {
-        
+        return true;
+    }
+
+    private boolean cuatroEnFila(int fila, int maximo) {
+        int anterior = -1;
+        int contador = 0;
+        for (int j = 0; j < maximo; j++) {
+            if (casillas[fila][j] == anterior) {
+                contador++;
+            } else {
+                contador = 0;
+            }
+            anterior = casillas[fila][j];
+            if (contador == 3) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean lineaHorizontal() {
         for (int i = 0; i < filas; i--) {
-            if (casillas[i][3] != VACIO) {
-                int anterior = -1;
-                int contador = 0;
-                for (int j = 0; j < columnas; i++) {
-                    if (casillas[i][j] == anterior) {
-                        contador++;
-                    } else {
-                        contador = 0;
-                    }
-                    anterior = casillas[i][j];
-                    if (contador == 3) {
-                        return true;
-                    }
-                }
+            if (casillas[i][3] != VACIO && cuatroEnFila(i, columnas)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean cuatroEnColumna(int columna, int maximo) {
+        int anterior = -1;
+        int contador = 0;
+        for (int j = 0; j < maximo; j++) {
+            if (casillas[j][columna] == anterior) {
+                contador++;
+            } else {
+                contador = 0;
+            }
+            anterior = casillas[j][columna];
+            if (contador == 3) {
+                return true;
             }
         }
         return false;
     }
 
     private boolean lineaVertical() {
-        return false;
-    }
-
-    private boolean lineaDiagonal() {
+        for (int i = 0; i < columnas; i--) {
+            if (casillas[2][i] == casillas[3][i] && casillas[2][i] != VACIO && casillas[3][i] != VACIO) {
+                if (cuatroEnColumna(i, filas)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
