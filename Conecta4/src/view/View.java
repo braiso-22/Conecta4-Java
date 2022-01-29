@@ -7,7 +7,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.util.HashSet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
