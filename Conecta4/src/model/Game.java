@@ -66,7 +66,11 @@ public class Game {
     }
 
     public boolean finalizado() {
-        return true;
+        return lineaHorizontal() || lineaVertical() || lineaDiagonalDerecha() || lineaDiagonalIzquierda();
+    }
+
+    public int getTurno() {
+        return turno;
     }
 
     private boolean cuatroEnFila(int fila, int maximo) {
@@ -187,14 +191,6 @@ public class Game {
         return false;
     }
 
-    /*
-        3 0
-        4 0
-        5 0
-        5 1
-        5 2
-        5 3
-     */
     private boolean lineaDiagonalIzquierda() {
         if (casillas[3][0] == casillas[2][1] && casillas[2][1] == casillas[1][2] && casillas[1][2] == casillas[0][3]) {
             return true;
