@@ -169,4 +169,60 @@ public class Game {
         }
         return false;
     }
+
+    private boolean cuatroEnDIzquierda(int fila, int col, int max) {
+
+        int anterior = -1;
+        int contador = 0;
+        for (int i = 0; i < max; i++) {
+            if (casillas[fila - i][col + i] == anterior) {
+                contador++;
+            } else {
+                contador = 0;
+            }
+            if (contador == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+        3 0
+        4 0
+        5 0
+        5 1
+        5 2
+        5 3
+     */
+    private boolean lineaDiagonalIzquierda() {
+        if (casillas[3][0] == casillas[2][1] && casillas[2][1] == casillas[1][2] && casillas[1][2] == casillas[0][3]) {
+            return true;
+        }
+        if (casillas[5][3] == casillas[4][4] && casillas[4][4] == casillas[3][5] && casillas[3][5] == casillas[2][6]) {
+            return true;
+        }
+        if (casillas[3][1] != VACIO && casillas[2][2] != VACIO && casillas[1][3] != VACIO) {
+            if (cuatroEnDIzquierda(4, 0, 5)) {
+                return true;
+            }
+        }
+        if (casillas[4][3] != VACIO && casillas[3][4] != VACIO && casillas[2][5] != VACIO) {
+            if (cuatroEnDIzquierda(5, 2, 5)) {
+                return true;
+            }
+        }
+        if (casillas[2][4] != VACIO && casillas[3][3] != VACIO) {
+            if (cuatroEnDIzquierda(5, 1, 6)) {
+                return true;
+            }
+        }
+        if (casillas[2][3] != VACIO && casillas[3][2] != VACIO) {
+            if (cuatroEnDIzquierda(5, 0, 6)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
