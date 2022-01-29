@@ -36,8 +36,8 @@ public class Game {
         iniciarCasillas();
     }
 
-    private void iniciarCasillas() {
-        for (int i = filas - 1; i > 0; i--) {
+    public void iniciarCasillas() {
+        for (int i = filas - 1; i >= 0; i--) {
             for (int j = 0; j < columnas; j++) {
                 casillas[i][j] = VACIO;
             }
@@ -64,8 +64,7 @@ public class Game {
         }
     }
 
-    public boolean finalizado() {
-
+    public boolean hayGanador() {
         return (lineaHorizontal() || lineaVertical() || lineaDiagonalDerecha() || lineaDiagonalIzquierda());
     }
 
@@ -102,7 +101,7 @@ public class Game {
     }
 
     private boolean lineaHorizontal() {
-        for (int i = 0; i < filas; i--) {
+        for (int i = 0; i < filas; i++) {
             if (casillas[i][3] != VACIO && cuatroEnFila(i, columnas)) {
                 return true;
             }
@@ -128,7 +127,7 @@ public class Game {
     }
 
     private boolean lineaVertical() {
-        for (int i = 0; i < columnas; i--) {
+        for (int i = 0; i < columnas; i++) {
             if (casillas[2][i] == casillas[3][i] && casillas[2][i] != VACIO && casillas[3][i] != VACIO) {
                 if (cuatroEnColumna(i, filas)) {
                     return true;
@@ -147,6 +146,7 @@ public class Game {
             } else {
                 contador = 0;
             }
+            anterior = casillas[fila + i][col + i];
             if (contador == 3) {
                 return true;
             }
@@ -155,11 +155,10 @@ public class Game {
     }
 
     private boolean lineaDiagonalDerecha() {
-
-        if (casillas[2][0] == casillas[3][1] && casillas[2][0] == casillas[4][2] && casillas[2][0] == casillas[5][3]) {
+        if (casillas[2][0] != VACIO && casillas[2][0] == casillas[3][1] && casillas[2][0] == casillas[4][2] && casillas[2][0] == casillas[5][3]) {
             return true;
         }
-        if (casillas[0][3] == casillas[1][4] && casillas[0][3] == casillas[2][5] && casillas[0][3] == casillas[3][6]) {
+        if (casillas[0][3] != VACIO && casillas[0][3] == casillas[1][4] && casillas[0][3] == casillas[2][5] && casillas[0][3] == casillas[3][6]) {
             return true;
         }
         if (casillas[2][1] != VACIO && casillas[3][2] != VACIO && casillas[4][3] != VACIO) {
@@ -195,6 +194,7 @@ public class Game {
             } else {
                 contador = 0;
             }
+            anterior = casillas[fila - i][col + i];
             if (contador == 3) {
                 return true;
             }
@@ -203,10 +203,10 @@ public class Game {
     }
 
     private boolean lineaDiagonalIzquierda() {
-        if (casillas[3][0] == casillas[2][1] && casillas[2][1] == casillas[1][2] && casillas[1][2] == casillas[0][3]) {
+        if (casillas[3][0] != VACIO && casillas[3][0] == casillas[2][1] && casillas[2][1] == casillas[1][2] && casillas[1][2] == casillas[0][3]) {
             return true;
         }
-        if (casillas[5][3] == casillas[4][4] && casillas[4][4] == casillas[3][5] && casillas[3][5] == casillas[2][6]) {
+        if (casillas[5][3] != VACIO && casillas[5][3] == casillas[4][4] && casillas[4][4] == casillas[3][5] && casillas[3][5] == casillas[2][6]) {
             return true;
         }
         if (casillas[3][1] != VACIO && casillas[2][2] != VACIO && casillas[1][3] != VACIO) {
