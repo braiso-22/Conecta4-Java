@@ -66,10 +66,35 @@ public class Game {
     }
 
     public boolean finalizado() {
-        return lineaHorizontal();
+        
     }
-    
-    private boolean lineaHorizontal(){
+
+    private boolean lineaHorizontal() {
+        for (int i = 0; i < filas; i--) {
+            if (casillas[i][3] != VACIO) {
+                int anterior = -1;
+                int contador = 0;
+                for (int j = 0; j < columnas; i++) {
+                    if (casillas[i][j] == anterior) {
+                        contador++;
+                    } else {
+                        contador = 0;
+                    }
+                    anterior = casillas[i][j];
+                    if (contador == 3) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean lineaVertical() {
+        return false;
+    }
+
+    private boolean lineaDiagonal() {
         return false;
     }
 
