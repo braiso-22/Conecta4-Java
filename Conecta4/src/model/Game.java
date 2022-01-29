@@ -44,17 +44,16 @@ public class Game {
         }
     }
 
-    public boolean addToColumna(int col) {
-        boolean encontrado = false;
-        for (int i = 0; i < filas && !encontrado; i++) {
-
+    public int addToColumna(int col) {
+        int noEncontrado = -1;
+        for (int i = 0; i < filas; i++) {
             if (casillas[i][col] == VACIO) {
                 casillas[i][col] = turno;
                 cambiarTurno();
-                encontrado = true;
+                return i;
             }
         }
-        return encontrado;
+        return noEncontrado;
     }
 
     private void cambiarTurno() {
