@@ -23,4 +23,4 @@ jobs:
         java-version: '13'
         distribution: 'adopt'
     - name: Run the Ant jar target
-      run: ant -noinput -buildfile build.xml jar
+      run: ant -noinput -buildfile ../../Conecta4/build.xml jar
