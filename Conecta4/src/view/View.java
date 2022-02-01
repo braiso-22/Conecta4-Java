@@ -214,7 +214,7 @@ public class View extends javax.swing.JFrame {
         panelFondo.add(pLateralDerecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 170, 540));
 
         pTablero.setBackground(new java.awt.Color(0, 102, 255));
-        pTablero.setLayout(new java.awt.GridLayout());
+        pTablero.setLayout(new java.awt.GridLayout(1, 0));
         panelFondo.add(pTablero, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 620, 410));
 
         pTurno.setBackground(new java.awt.Color(0, 51, 255));
