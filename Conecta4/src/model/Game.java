@@ -36,7 +36,7 @@ public class Game {
         iniciarCasillas();
     }
 
-    /*
+    /**
         Pone todas las casillas a valor vacio
      */
     public void iniciarCasillas() {
@@ -47,7 +47,7 @@ public class Game {
         }
     }
 
-    /*
+    /**
         Cambia el valor de la ultima ficha de la columna pasada por el valor
         del turno actual, cambia el turno y devuelve -1 si no se puede añadir
         a esa columna más fichas o el numero de fila si si se puede añadir.
@@ -64,7 +64,7 @@ public class Game {
         return noEncontrado;
     }
 
-    /*
+    /**
         Funcion que cambia el turno de Rojo a Amarillo y viceversa
      */
     private void cambiarTurno() {
@@ -75,14 +75,14 @@ public class Game {
         }
     }
 
-    /*
+    /**
         Funcion que comprueba si hay lineas de 4 fichas en todo el tablero
      */
     public boolean hayGanador() {
         return (lineaHorizontal() || lineaVertical() || lineaDiagonalDerecha() || lineaDiagonalIzquierda());
     }
 
-    /*
+    /**
         Funcion que recorre el tablero y si encuentra una casilla sin ficha 
         no hay empate, en caso contrario puede haber empate
      */
@@ -97,14 +97,14 @@ public class Game {
         return true;
     }
 
-    /*
+    /**
         Getter de turno
      */
     public int getTurno() {
         return turno;
     }
 
-    /*
+    /**
         Funcion que devuelve si hay 4 fichas horizontales seguidas
      */
     private boolean cuatroEnFila(int fila, int maximo) {
@@ -124,7 +124,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que comprueba cuatroEnFila para todo el tablero
      */
     private boolean lineaHorizontal() {
@@ -136,7 +136,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que devuelve si hay 4 fichas verticales seguidas
      */
     private boolean cuatroEnColumna(int columna, int maximo) {
@@ -156,7 +156,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que comprueba cuatroEnColumna para todo el tablero
      */
     private boolean lineaVertical() {
@@ -170,7 +170,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que devuelve si hay 4 fichas diagonales a la derecha seguidas
      */
     private boolean cuatroEnDDerecha(int fila, int col, int max) {
@@ -190,7 +190,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que comprueba cuatroEnDDerecha para todo el tablero
      */
     private boolean lineaDiagonalDerecha() {
@@ -223,7 +223,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que devuelve si hay 4 fichas diagonales a la izquierda seguidas
      */
     private boolean cuatroEnDIzquierda(int fila, int col, int max) {
@@ -244,7 +244,7 @@ public class Game {
         return false;
     }
 
-    /*
+    /**
         Funcion que comprueba cuatroEnDIzquierda para todo el tablero
      */
     private boolean lineaDiagonalIzquierda() {
